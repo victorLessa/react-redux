@@ -1,3 +1,10 @@
+import { createActions, createReducer } from "reduxsauce";
+
+// Created Actions Types and Creators Actions
+export const { Types, Creators } = createActions({
+  toggleLesson: ["module", "lesson"]
+});
+
 const INITIAL_STATE = {
   activeLesson: {},
   activeModule: {},
@@ -25,15 +32,14 @@ const INITIAL_STATE = {
   ]
 };
 
-function reducer(state = INITIAL_STATE, action) {
-  if (action.type === "TOGGLE_LESSON") {
-    return {
-      ...state,
-      activeLesson: action.lesson,
-      activeModule: action.module
-    };
-  }
-  return state;
-}
+const toggle = (state = INITIAL_STATE, action) => ({
+  ...state,
+  activeLesson: action.lesson,
+  activeModule: action.module
+});
 
-export default reducer;
+// Created Reducers
+
+export default createReducer(INITIAL_STATE, {
+  [Types.TOGGLE_LESSON]: toggle
+});
